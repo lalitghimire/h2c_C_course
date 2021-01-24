@@ -34,3 +34,21 @@ Rock-Paper-Scissors, part 4
 
 - Add a loop to the main program so that te user may play as many rounds as she has defined. Move the needed code blocks inside the loop (asking the user's choice, generating the computer's choice and printing the result)
 - Update the variables "wins" and "computerWins" in the end of each roun
+
+Rock-Paper-Scissors, part 5
+- Divide the functionality of the main program into functions as follows:
+- int ask() - asks the user's choice and returns it as a number
+- int generate() - generates a random number between 1 and 3 and returns it
+- int checkWin(int playerChoice, int computerChoice) - the function returns a number telling which one won: 1: player, -1: computer, 0 = draw
+- void printResult(int computerChoice, int result) - the function prints out the results of a one round
+
+
+Rock-Paper-Scissors game
+In this assignment, you build a simple Rock-Paper-Scissors -game where the player plays against the computer. The assignment is divided into five parts. Instructions for each part can be found in the exercise sections of this course. It is not mandatory to follow all the instructions, you can code the program as you wish. BUT some rules do apply:
+
+the user must be asked how many rounds she wants to play
+the final results (number of wins, ties and losses) must be printed out in the end of the game
+usage of global variables is forbidden
+usage of goto-statement is forbidden
+you must use functions (=all the code cannot be in the main method)
+you must comment your source code properly

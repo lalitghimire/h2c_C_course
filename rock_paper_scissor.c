@@ -1,16 +1,23 @@
+/*Highway 2 code 2021 KAMK-> C programming-> Rock-Paper-Scissor  ©lalitghimire*/
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <stdbool.h>
+
+//Function declarations
+int ask();                                                                               // ask user for their choice between rock paper and scissors
+int generate();                                                                          // generate computers choice among rock paper and scissors
+int checkWin(int firstChoice, int secondChoice);                                         //function which compare choices and output result
+void printResult(int result, int *add_draw, int *add_playerWins, int *add_computerWins); // print result of each round and updates wins
 
 int main()
 {
-
-    int wins = 0;
-    int computerWins = 0;
+    //variables declarations
+    int rounds;
     int draw = 0;
-    int computerChoice, rounds;
-    int i;
+    int playerWins = 0;
+    int computerWins = 0;
+    int computerChoice, userChoiceAsInt;
     int result;
 
     //print greetings message//
@@ -21,84 +28,116 @@ int main()
     scanf("%d", &rounds);
     printf("You chose to play %d rounds!!\n", rounds);
 
-    for (i = 0; i < rounds; i++)
+    //looping through the number of rounds to play
+    for (int i = 0; i < rounds; i++)
     {
-        //initialize random number generation function//
-        srand(time(0));
+        //function calls
 
-        //random number generation between 1 and 3 for computer choice and print computer choice//
-        computerChoice = rand() % 3 + 1;
+        userChoiceAsInt = ask();
+        computerChoice = generate();
+        result = checkWin(userChoiceAsInt, computerChoice);
 
-        //******************end of exercise from part 1*********************//
+        //printing result and updating the wins and draws for player and computer
+        printResult(result, &draw, &playerWins, &computerWins);
+    }
+    //printfinalresult after the end of all rounds
+    printf(" \n");
+    printf(".. the game ends.. \n");
+    printf("You won: %d/%d times\n", playerWins, rounds);
+    printf("Computer Won: %d/%d times\n", computerWins, rounds);
+    printf("Number of ties: %d \n", draw);
+}
 
-        //--------------------part2------------------------------------------//
+//function to  ask user's choice as character, checks for correct value and return corresponding integer value
+int ask()
+{
+    char input;
+    int output;
 
-        // printing value of computer choice as text instead of number//
-        //*******************to check the results during the exercise. printing will be ommited or will be printed after user input*******
-        if (computerChoice == 1)
-        {
-            printf("\nComputer choice is rock!! \n");
-        }
-        else if (computerChoice == 2)
-        {
-            printf("\nComputer choice is paper!!\n");
-        }
-        else if (computerChoice == 3)
-        {
-            printf("\nComputer choice is Scissors!!\n");
-        }
+    // do while loop to validate the entered character
+    do
+    {
+        printf("\nChoose R or r for rock, P or p for paper and S or s for scissors\n");
+        scanf(" %c", &input);
+    } while (input != 'R' && input != 'r' && input != 'P' && input != 'p' && input != 'S' && input != 's');
 
-        //declaring variables from part 2//
-        int userChoiceAsInt;
-        char userChoiceAsChar;
+    //assign integer value to user's choice
+    if (input == 'R' || input == 'r')
+    {
+        output = 1;
+        printf("Your choice is Rock!! \n");
+    }
+    else if (input == 'P' || input == 'p')
+    {
+        output = 2;
+        printf("Your choice is Paper!! \n");
+    }
+    else if (input == 'S' || input == 's')
+    {
+        output = 3;
+        printf("Your choice is Scissors!!\n");
+    }
+    return output;
+}
 
-        //Asking user for input to play the game, do while loop from part 3 of exercise
-        do
-        {
-            printf("\nChoose R or r for rock, P or p for paper and S or s for scissors\n");
-            scanf(" %c", &userChoiceAsChar);
-        } while (userChoiceAsChar != 'R' && userChoiceAsChar != 'r' && userChoiceAsChar != 'P' && userChoiceAsChar != 'p' && userChoiceAsChar != 'S' && userChoiceAsChar != 's');
+//function to generate a random value and print out computer's choice accordingly
+int generate()
+{
+    //random number generation between 1 and 3
+    srand(time(0));
+    int random = rand() % 3 + 1;
 
-        //Assigning values to user's valid input
+    // printing out computer choice
+    if (random == 1)
+    {
+        printf("Computer choice is rock!! \n");
+    }
+    else if (random == 2)
+    {
+        printf("Computer choice is paper!!\n ");
+    }
+    else if (random == 3)
+    {
+        printf("Computer choice is Scissors!!\n ");
+    }
+    return random;
+}
 
-        if (userChoiceAsChar == 'R' || userChoiceAsChar == 'r')
-        {
-            userChoiceAsInt = 1;
-            printf("User choice is Rock\n");
-        }
-        else if (userChoiceAsChar == 'P' || userChoiceAsChar == 'p')
-        {
-            userChoiceAsInt = 2;
-            printf("User choice is Paper\n");
-        }
-        else if (userChoiceAsChar == 'S' || userChoiceAsChar == 's')
-        {
-            userChoiceAsInt = 3;
-            printf("User choice is Scissors\n");
-        }
+//function takes two integer parameters, compare and return values accordingly
+int checkWin(int firstChoice, int secondChoice)
+{
+    if (firstChoice == secondChoice)
+    {
+        return 0;
+    }
+    else if (firstChoice == 1 && secondChoice == 3 || firstChoice == 2 && secondChoice == 1 || firstChoice == 3 && secondChoice == 2)
+    {
+        return 1;
+    }
+    else if (firstChoice == 1 && secondChoice == 2 || firstChoice == 2 && secondChoice == 3 || firstChoice == 3 && secondChoice == 1)
+    {
+        return -1;
+    }
+}
 
-        //printf("User choice is: %d", userChoiceAsInt); // printing the value of userchoice
+//takes result as input compares and print result of each round. update draw, playerWins and computerWins variable
+//pointers are used to update the variables
+void printResult(int result, int *add_draw, int *add_playerWins, int *add_computerWins)
+{
 
-        //check for who wins //****part 3
-        if (userChoiceAsInt == computerChoice)
-        {
-            printf("It's a Draw\n");
-            draw = draw + 1;
-        }
-
-        else if (userChoiceAsInt == 1 && computerChoice == 3 || userChoiceAsInt == 2 && computerChoice == 1 || userChoiceAsInt == 3 && computerChoice == 2)
-        {
-            printf("Player wins\n");
-            wins = wins + 1;
-        }
-        else if (userChoiceAsInt == 1 && computerChoice == 2 || userChoiceAsInt == 2 && computerChoice == 3 || userChoiceAsInt == 3 && computerChoice == 1)
-        {
-            printf("Computer wins\n");
-            computerWins = computerWins + 1;
-        }
-
-        printf("Player wins: %d\n", wins);
-        printf("Computer Wins: %d\n", computerWins);
-        printf("Draws: %d \n", draw);
+    if (result == 0)
+    {
+        printf("It's a Draw!!\n");
+        *add_draw += 1;
+    }
+    else if (result == 1)
+    {
+        printf("You won!!\n");
+        *add_playerWins += 1;
+    }
+    else if (result == -1)
+    {
+        printf("Computer won\n");
+        *add_computerWins += 1;
     }
 }
