@@ -19,7 +19,8 @@ int main()
     int computerWins = 0;
     int computerChoice, userChoiceAsInt;
     int result;
-
+    srand(time(0)); // Initialize random number generator
+	
     //print greetings message//
     printf("Welcome to the Rock-Paper-Scissor game!!! \n");
 
@@ -37,7 +38,8 @@ int main()
         computerChoice = generate();
         result = checkWin(userChoiceAsInt, computerChoice);
 
-        //printing result and updating the wins and draws for player and computer
+        //printing result for each round and updating the wins and draws for player and computer
+		
         printResult(result, &draw, &playerWins, &computerWins);
     }
     //printfinalresult after the end of all rounds
@@ -47,6 +49,10 @@ int main()
     printf("Computer Won: %d/%d times\n", computerWins, rounds);
     printf("Number of ties: %d \n", draw);
 }
+
+//***********************end of main**************************
+
+//function definitions
 
 //function to  ask user's choice as character, checks for correct value and return corresponding integer value
 int ask()
@@ -80,11 +86,11 @@ int ask()
     return output;
 }
 
+
 //function to generate a random value and print out computer's choice accordingly
 int generate()
 {
     //random number generation between 1 and 3
-    srand(time(0));
     int random = rand() % 3 + 1;
 
     // printing out computer choice
@@ -127,7 +133,7 @@ void printResult(int result, int *add_draw, int *add_playerWins, int *add_comput
 
     if (result == 0)
     {
-        printf("It's a Draw!!\n");
+        printf("It's a tie!!\n");
         *add_draw += 1;
     }
     else if (result == 1)
@@ -137,7 +143,7 @@ void printResult(int result, int *add_draw, int *add_playerWins, int *add_comput
     }
     else if (result == -1)
     {
-        printf("Computer won\n");
+        printf("Computer won!!\n");
         *add_computerWins += 1;
     }
 }
